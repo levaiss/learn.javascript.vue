@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+<div id="app">
+    <h1>
+        Отрендерено {{ countUsers }} пользователей.
+    </h1>
+    <button @click="showUsers = !showUsers" type="button" class="btn btn-primary">{{ btnTitle }}</button>
+    <table class="table">
+        <tbody v-if="showUsers">
+        <tr v-for="(user, index) in users" :key="index">
+            <th>{{index+1}}</th>
+            <td><img :src="user.photo | defaultPhoto" class="img-thumbnail"></td>
+            <td>{{user.surname | uppercase}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.patronymic}}</td>
+            <td><button v-copy="getUserFullName(index)" type="button" class="btn btn-primary">Copy</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script src="lib/script.js"></script>
+</body>
+</html>

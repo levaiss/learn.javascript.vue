@@ -12,6 +12,12 @@ export default new Router({
       component: Home
     },
     {
+        path: "/login",
+        name: "login",
+        component: () =>
+            import(/* webpackChunkName: "about" */ "./views/Login.vue")
+    },
+    {
       path: "/users",
       name: "users",
       // route level code-splitting
@@ -21,10 +27,16 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/Users.vue")
     },
     {
-        path: "/user",
+        path: "/user/:id",
         name: "user",
         component: () =>
-            import(/* webpackChunkName: "about" */ "./views/User.vue")
-    }
+            import(/* webpackChunkName: "about" */ "./views/User/UserShow.vue")
+    },
+      {
+          path: "/user/:id/edit",
+          name: "userEdit",
+          component: () =>
+              import(/* webpackChunkName: "about" */ "./views/User/UserEdit.vue")
+      }
   ]
 });

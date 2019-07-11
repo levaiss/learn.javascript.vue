@@ -7,6 +7,7 @@
           <th scope="col">Name</th>
           <th scope="col">E-mail</th>
           <th scope="col">Phone</th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tr v-for="user in users" :key="user.name + '-' + user.id">
@@ -17,9 +18,9 @@
             <img :src="user.picture" class="avatar" alt="">
           </td>
           <td>
-            <a href="">
+            <router-link :to="{ name: 'user' , params: { id: user.id }}">
               {{ user.firstName + " " + user.lastName }}
-            </a>
+            </router-link>
           </td>
           <td>
             {{ user.email }}
@@ -27,6 +28,11 @@
           <td>
             {{ user.phone }}
           </td>
+            <td>
+                <router-link :to="{ name: 'userEdit' , params: { id: user.id }}" class="btn btn-info">
+                    Edit
+                </router-link>
+            </td>
         </tr>
       </table>
 </template>

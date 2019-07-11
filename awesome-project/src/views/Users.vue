@@ -2,8 +2,8 @@
   <div class="page users">
     <div class="container">
       <div class="row">
-        <div class="col-12">
-          <h1>Users list</h1>
+        <div v-if="isAdmin" class="col-12">
+          <h1 class="pb-3">Users list</h1>
 
           <div v-if="usersLoading" class="text-center py-5">
             <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
@@ -12,6 +12,11 @@
           </div>
 
           <users-list v-else :users="users"></users-list>
+        </div>
+        <div v-else class="col-12">
+          <div class="alert alert-warning" role="alert">
+            Please login!
+          </div>
         </div>
       </div>
     </div>
@@ -29,6 +34,7 @@
         },
         data: function() {
             return {
+                isAdmin: window.auth.isAdmin,
                 users: [],
                 usersLoading: true
             }

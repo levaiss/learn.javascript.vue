@@ -16,12 +16,30 @@
           </li>
         </ul>
 
-        <div class="stub"></div>
+        <div class="stub">
+          <router-link :to="{ name: 'login'}" class="btn btn-success mr-2">Sign in</router-link>
+          <button v-if="isAdmin" @click.prevent="Logout" type="submit" class="btn btn-dark">Exit</button>
+        </div>
       </nav>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+    export default {
+        data: function() {
+            return {
+                isAdmin: window.auth.isAdmin
+            }
+        },
+        methods: {
+            Logout: function () {
+                auth.logout();
+            }
+        }
+    };
+</script>
 
 <style lang="scss">
  .logo {
@@ -29,6 +47,8 @@
    height: 30px;
  }
   .stub, .navbar-brand {
+    display: flex;
+    justify-content: flex-end;
     width: 200px;
   }
   .page {

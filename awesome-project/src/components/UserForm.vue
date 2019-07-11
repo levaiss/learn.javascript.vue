@@ -7,26 +7,39 @@
                     class="form-control"
                     :id="name"
                     :placeholder="name"
-                    :value="value"
+                    v-model="localUser[name]"
+                    @blur="saveChange()"
             >
         </div>
-        <hr class="my-5">
-        <button type="submit" class="btn btn-primary mb-3">Save change</button>
-        <button type="submit" class="btn btn-danger ml-2 mb-3">Delete user</button>
     </form>
 </template>
 
 <script>
     export default {
-        name: "users-form",
+        name: "UserForm",
         props: {
-            user: Object,
-            required: true
+            user: {
+                type: Object,
+                required: true
+            }
+        },
+        data: function() {
+            return {
+                localUser: null
+            }
         },
         filters: {
             ucFirst: function (value) {
                 return (value) ? value[0].toUpperCase() + value.slice(1) : "";
             }
-        }
+        },
+        created() {
+            this.localUser = Object.assign({}, this.user);
+        },
+        methods: {
+            saveChange: function () {
+                this.$emit('update', this.localUser)
+            }
+        },
     };
 </script>

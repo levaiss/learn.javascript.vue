@@ -14,7 +14,10 @@
             </div>
             <div class="row pb-3">
                 <div class="col-6 offset-3">
-                    <user-form :user="user"></user-form>
+                    <user-form :user="user" @update="user = $event"></user-form>
+                    <hr class="my-5">
+                    <button @click="saveUser" class="btn btn-primary mb-3">Save change</button>
+                    <button @click="deleteUser" class="btn btn-danger ml-2 mb-3">Delete user</button>
                 </div>
             </div>
         </div>
@@ -39,7 +42,7 @@
         created: function () {
             let that = this;
 
-            axios.get('http://localhost:3009/users/' + that.id)
+            axios.get('http://localhost:3009/users/' + this.id)
                 .then(function (response) {
 
                     that.user = response.data;
@@ -49,6 +52,26 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        methods: {
+            saveUser: function () {
+                axios.patch('http://localhost:3009/users/' + this.id, this.user)
+                    .then(function () {
+                        console.log("User saved!");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            deleteUser: function () {
+                axios.delete('http://localhost:3009/users/' + this.id)
+                    .then(function () {
+                        console.log("User delete!");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         }
     };
 

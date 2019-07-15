@@ -1,17 +1,19 @@
-function isAdmin() {
-    console.log(!!localStorage.getItem("isAdmin"));
+import router from "@/router.js";
 
-    return !!localStorage.getItem("isAdmin");
+function isAdmin() {
+  return !!localStorage.getItem("isAdmin");
 }
 
 function login() {
-    localStorage.setItem("isAdmin", "true");
+  localStorage.setItem("isAdmin", "true");
+  window.state.$emit("Login");
+  router.push({ name: "users" });
 }
 
 function logout() {
-    localStorage.removeItem("isAdmin");
+  localStorage.removeItem("isAdmin");
+  window.state.$emit("Logout");
+  router.push({ name: "home" });
 }
 
-export {
-    isAdmin, login, logout
-};
+export { isAdmin, login, logout };

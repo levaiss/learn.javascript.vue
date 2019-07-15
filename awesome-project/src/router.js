@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
+import { isAdmin } from "@/auth.js";
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   mode: "history",
   routes: [
     {
@@ -33,3 +34,17 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const available = ["login", "home"];
+
+  if (available.indexOf(to.name) !== -1) {
+    next();
+  } else if (to.path !== "/login" && !isAdmin()) {
+    next("/login");
+  } else {
+    next();
+  }
+});
+
+export default router;

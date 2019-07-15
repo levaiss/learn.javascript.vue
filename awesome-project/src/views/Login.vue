@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import {isAdmin, login} from "@/auth.js";
+import { isAdmin, login } from "@/auth.js";
 
 export default {
   data: function() {

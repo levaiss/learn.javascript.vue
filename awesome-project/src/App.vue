@@ -34,32 +34,32 @@
       </nav>
     </div>
 
-    <!--
-    <div class="container">
-      <div class="row">
-        <div class="col-12 mt-3">
-          <div class="alert alert-warning" role="alert">
-            Please login!
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
-
     <router-view />
   </div>
 </template>
 
 <script>
-import {isAdmin, logout} from "@/auth.js";
+import { logout } from "@/auth.js";
 
 export default {
   data: function() {
     return {
-      isAdmin: isAdmin()
+      isAdmin: false
     };
   },
+  created() {
+    window.state.$on("Login", () => {
+      this.checkLogin();
+    });
+    window.state.$on("Logout", () => {
+      this.checkLogin();
+    });
+    this.checkLogin();
+  },
   methods: {
+    checkLogin: function() {
+      this.isAdmin = !!localStorage.getItem("isAdmin");
+    },
     Logout: function() {
       logout();
     }

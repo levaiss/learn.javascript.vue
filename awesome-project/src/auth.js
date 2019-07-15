@@ -1,19 +1,17 @@
-export default class Auth {
-    constructor() {
-        this.admin = !!(localStorage.getItem("isAdmin"));
-    }
+function isAdmin() {
+    console.log(!!localStorage.getItem("isAdmin"));
 
-    get isAdmin() {
-        return this.admin;
-    }
+    return !!localStorage.getItem("isAdmin");
+}
 
-    login() {
-        localStorage.setItem("isAdmin", "true");
-        this.admin = true;
-    }
+function login() {
+    localStorage.setItem("isAdmin", "true");
+}
 
-    logout() {
-        localStorage.removeItem("isAdmin");
-        this.admin = false;
-    }
+function logout() {
+    localStorage.removeItem("isAdmin");
+}
+
+export {
+    isAdmin, login, logout
 };

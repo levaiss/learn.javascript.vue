@@ -1,14 +1,20 @@
 import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import Auth from "./auth";
+import App from "@/App.vue";
+import router from "@/router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {isAdmin} from "@/auth.js";
 
 Vue.config.productionTip = false;
 
-window.auth = new Auth();
+router.beforeEach((to, from, next) => {
+    if ((to.path !== "/login") && (!isAdmin())) {
+        next("/login")
+    } else {
+        next()
+    }
+});
 
-let vm = new Vue({
+new Vue({
   router,
   render: h => h(App)
 }).$mount("#app");

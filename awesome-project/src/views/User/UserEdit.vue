@@ -13,19 +13,23 @@
     <div v-else class="container">
       <div class="row">
         <div class="col-12 pb-2">
-          <a href="#" class="text-success" @click.prevent="$router.go(-1)"
+          <a href="#" class="text-success" @click.prevent="backToUsers()"
             >&laquo; Back</a
           >
         </div>
       </div>
       <div class="row pb-3">
         <div class="col-6 offset-3">
-          <user-form :user="user" @update="user = $event"></user-form>
+          <user-form :user="user" @update="updateUser"></user-form>
           <hr class="my-5" />
           <button @click="saveUser" class="btn btn-primary mb-3">
             Save change
           </button>
-          <button @click="deleteUser" class="btn btn-danger ml-2 mb-3">
+          <button
+            v-if="id"
+            @click="deleteUser"
+            class="btn btn-danger ml-2 mb-3"
+          >
             Delete user
           </button>
         </div>
@@ -42,33 +46,52 @@ export default {
   components: {
     "user-form": UserForm
   },
+  props: {
+    id: {
+      type: [String, Number],
+      default: null
+    }
+  },
   data: function() {
     return {
-      usersLoading: true,
-      id: this.$route.params.id,
+      saveParams: {
+        method: "post",
+        url: "/users"
+      },
+      usersLoading: false,
       user: {}
     };
   },
   created: function() {
     let that = this;
 
+    if (!that.id) return;
+
+    this.saveParams.method = "patch";
+    this.saveParams.url += `/${this.id}`;
+    that.usersLoading = true;
+
     axios
       .get("http://localhost:3009/users/" + this.id)
-      .then(function(response) {
+      .then(response => {
         that.user = response.data;
         that.usersLoading = false;
         console.log("Данные получены!");
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
+        that.usersLoading = true;
       });
   },
   methods: {
     saveUser: function() {
-      axios
-        .patch("http://localhost:3009/users/" + this.id, this.user)
-        .then(function() {
+      axios[this.saveParams.method](
+        `http://localhost:3009${this.saveParams.url}`,
+        this.user
+      )
+        .then(() => {
           console.log("User saved!");
+          this.$router.push({ name: "users" });
         })
         .catch(function(error) {
           console.log(error);
@@ -77,12 +100,16 @@ export default {
     deleteUser: function() {
       axios
         .delete("http://localhost:3009/users/" + this.id)
-        .then(function() {
-          console.log("User delete!");
-        })
-        .catch(function(error) {
+        .then(() => console.log("User delete!"))
+        .catch(error => {
           console.log(error);
         });
+    },
+    updateUser: function(modifiedUser) {
+      this.user = modifiedUser;
+    },
+    backToUsers: function() {
+      this.$router.go(-1);
     }
   }
 };

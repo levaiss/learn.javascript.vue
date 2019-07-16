@@ -2,9 +2,14 @@
   <div class="page users">
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 d-flex justify-content-between align-items-center">
           <h1 class="pb-3">Users list</h1>
 
+          <router-link :to="{ name: 'userCreate' }" class="btn btn-info"
+            >Create user</router-link
+          >
+        </div>
+        <div class="col-12">
           <div v-if="usersLoading" class="text-center py-5">
             <div
               class="spinner-grow"

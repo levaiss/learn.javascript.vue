@@ -25,11 +25,18 @@ let router = new Router({
     {
       path: "/user/:id",
       name: "user",
-      component: () => import("./views/User/UserShow.vue")
+      component: () => import("./views/User/UserShow.vue"),
+      props: true
     },
     {
       path: "/user/:id/edit",
       name: "userEdit",
+      component: () => import("./views/User/UserEdit.vue"),
+      props: true
+    },
+    {
+      path: "/user/create",
+      name: "userCreate",
       component: () => import("./views/User/UserEdit.vue")
     }
   ]

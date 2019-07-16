@@ -13,7 +13,7 @@
     <div v-else class="container">
       <div class="row">
         <div class="col-12 pb-2">
-          <a href="#" class="text-success" @click.prevent="$router.go(-1)"
+          <a href="#" class="text-success" @click.prevent="backToUsers()"
             >&laquo; Back</a
           >
         </div>
@@ -63,10 +63,15 @@ import axios from "axios";
 
 export default {
   components: {},
+  props: {
+    id: {
+      type: [String, Number],
+      required: true
+    }
+  },
   data: function() {
     return {
       usersLoading: true,
-      id: this.$route.params.id,
       user: {}
     };
   },
@@ -88,6 +93,11 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+  },
+  methods: {
+    backToUsers: function() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>

@@ -8,7 +8,6 @@
         id="firstName"
         placeholder="First name"
         v-model.lazy="localUser.firstName"
-        @blur="saveChange()"
       />
     </div>
 
@@ -20,7 +19,6 @@
         id="lastName"
         placeholder="First name"
         v-model.lazy="localUser.lastName"
-        @blur="saveChange()"
       />
     </div>
 
@@ -32,8 +30,12 @@
         id="phone"
         placeholder="Phone"
         v-model.lazy="localUser.phone"
-        @blur="saveChange()"
       />
+    </div>
+
+    <div class="form-group">
+      <label>Register date</label>
+      <date-picker v-model="localUser.registered"></date-picker>
     </div>
 
     <div class="form-group">
@@ -44,7 +46,6 @@
         id="email"
         placeholder="E-mail address"
         v-model.lazy="localUser.email"
-        @blur="saveChange()"
       />
     </div>
 
@@ -56,7 +57,6 @@
         id="address"
         placeholder="Address"
         v-model.lazy="localUser.address"
-        @blur="saveChange()"
       />
     </div>
 
@@ -68,7 +68,6 @@
         id="company"
         placeholder="Company name"
         v-model.lazy="localUser.company"
-        @blur="saveChange()"
       />
     </div>
 
@@ -79,14 +78,17 @@
         id="about"
         placeholder="About"
         v-model.lazy="localUser.about"
-        @blur="saveChange()"
       ></textarea>
     </div>
   </form>
 </template>
 
 <script>
+
 export default {
+  components: {
+    DatePicker: () => import("@/components/DatePicker.vue")
+  },
   name: "UserForm",
   filters: {
     ucFirst: function(value) {
@@ -107,10 +109,13 @@ export default {
   created() {
     this.localUser = Object.assign({}, this.user);
   },
-  methods: {
-    saveChange: function() {
-      this.$emit("update", this.localUser);
+  watch: {
+    localUser: {
+      deep: true,
+      handler: function () {
+        this.$emit("update", this.localUser);
+      }
     }
-  }
+  },
 };
 </script>

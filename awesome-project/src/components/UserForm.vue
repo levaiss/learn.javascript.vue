@@ -35,7 +35,7 @@
 
     <div class="form-group">
       <label>Register date</label>
-      <date-picker v-model="localUser.registered"></date-picker>
+      <date-picker :date="localUser.registered" @update="saveData"></date-picker>
     </div>
 
     <div class="form-group">
@@ -84,12 +84,11 @@
 </template>
 
 <script>
-
 export default {
+  name: "UserForm",
   components: {
     DatePicker: () => import("@/components/DatePicker.vue")
   },
-  name: "UserForm",
   filters: {
     ucFirst: function(value) {
       return value ? value[0].toUpperCase() + value.slice(1) : "";
@@ -106,16 +105,21 @@ export default {
       localUser: null
     };
   },
-  created() {
-    this.localUser = Object.assign({}, this.user);
-  },
   watch: {
     localUser: {
       deep: true,
-      handler: function () {
+      handler: function() {
         this.$emit("update", this.localUser);
       }
     }
   },
+  created() {
+    this.localUser = Object.assign({}, this.user);
+  },
+  methods: {
+    saveData: function (data) {
+      this.localUser.registered = data;
+    }
+  }
 };
 </script>

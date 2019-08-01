@@ -20,7 +20,47 @@
             </div>
           </div>
 
-          <users-list v-else :users="users"></users-list>
+          <users-list v-else :users="users" :perPage="5">
+            <template v-slot:header>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Name</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Balance</th>
+                <th scope="col"></th>
+              </tr>
+            </template>
+            <template v-slot:body="props">
+              <tr v-for="user in props.sortedUsers" :key="user.name + '-' + user.id">
+                <th scope="row">
+                  {{ user.id }}
+                </th>
+                <td>
+                  <img :src="user.picture" class="avatar" alt=""/>
+                </td>
+                <td>
+                  <router-link :to="{ name: 'user', params: { id: user.id } }">
+                    {{ user.firstName + " " + user.lastName }}
+                  </router-link>
+                </td>
+                <td>
+                  <a :href="'mailto:' + user.email" title="">{{ user.email }}</a>
+                </td>
+                <td>
+                  {{ user.balance }}
+                </td>
+                <td class="text-right">
+                  <router-link
+                          :to="{ name: 'userEdit', params: { id: user.id } }"
+                          class="btn btn-info"
+                  >
+                    Edit
+                  </router-link>
+                </td>
+              </tr>
+            </template>
+          </users-list>
         </div>
       </div>
     </div>
@@ -30,11 +70,10 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-import UsersList from "@/components/UsersList.vue";
 
 export default {
   components: {
-    UsersList
+    UsersList: () => import("@/components/UsersList.vue"),
   },
   data: function() {
     return {

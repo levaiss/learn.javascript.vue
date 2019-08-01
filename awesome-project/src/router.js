@@ -23,6 +23,11 @@ let router = new Router({
       component: () => import("./views/Users.vue")
     },
     {
+      path: "/phoneBook",
+      name: "phoneBook",
+      component: () => import("./views/PhoneBook.vue")
+    },
+    {
       path: "/user/:id",
       name: "user",
       component: () => import("./views/User/UserShow.vue"),

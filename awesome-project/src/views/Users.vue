@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <users-list v-else :users="users" :perPage="5">
+          <users-list v-else :users="users" :perPage="5" >
             <template v-slot:header>
               <tr>
                 <th scope="col">ID</th>
@@ -41,7 +41,7 @@
                 </td>
                 <td>
                   <router-link :to="{ name: 'user', params: { id: user.id } }">
-                    {{ user.firstName + " " + user.lastName }}
+                    {{ props.getFullName(user) }}
                   </router-link>
                 </td>
                 <td>

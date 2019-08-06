@@ -14,7 +14,8 @@
                             type="search"
                             class="form-control"
                             id="search"
-                            placeholder="Search.."
+                            placeholder="Search by name.."
+                            v-model="query"
                     />
                 </div>
             </div>
@@ -25,7 +26,7 @@
                 <slot name="header"></slot>
             </thead>
             <tbody>
-                <slot name="body" :sortedUsers="sortedUsers"></slot>
+                <slot name="body" :sortedUsers="sortedUsers" :getFullName="getFullName"></slot>
             </tbody>
         </table>
 
@@ -60,14 +61,21 @@
     data: function () {
       return {
         localPerPage: this.perPage,
-        currentPage: 1
+        currentPage: 1,
+        query: ""
       };
     },
     computed: {
+      filteredUsers: function() {
+        let vm = this;
+        return this.users.filter(function (user) {
+          return vm.getFullName(user).toLowerCase().indexOf(vm.query.toLowerCase()) !== -1;
+        })
+      },
       sortedUsers: function () {
         let startIndex = (this.currentPage - 1) * this.localPerPage;
 
-        return this.users
+        return this.filteredUsers
           .slice(0)
           .sort(function (a, b) {
             return parseInt(a.id) - parseInt(b.id);
@@ -75,10 +83,13 @@
           .slice(startIndex, startIndex + this.localPerPage);
       },
       usersLength: function () {
-        return this.users.length;
+        return this.filteredUsers.length;
       }
     },
     methods: {
+      getFullName: function(user){
+        return user.firstName + " " + user.lastName;
+      },
       updatePagination: function (currentPage) {
         this.currentPage = currentPage;
       },

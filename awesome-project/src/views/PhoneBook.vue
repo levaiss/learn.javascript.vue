@@ -16,7 +16,7 @@
                         </div>
                     </div>
 
-                    <users-list v-else :users="users" :perPage="10">
+                    <users-list v-else :users="users" :perPage="10" :get-full-name="getFullName">
                         <template v-slot:header>
                             <tr>
                                 <th scope="col">Name</th>
@@ -65,6 +65,11 @@
         .catch(function(error) {
           console.log(error);
         });
+    },
+    methods : {
+      getFullName: function(user){
+        return user.firstName + " " + user.lastName;
+      },
     }
   };
 </script>

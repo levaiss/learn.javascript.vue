@@ -99,7 +99,7 @@
       "email": "millicent.carpenter@inquala.io",
       "phone": "+7 (820) 539-2725",
       "address": "158 Herkimer Street, Stewart, Virginia, 8608",
-      "about": "Incididunt commodo sit irure ex excepteur duis non in. Proident excepteur anim laboris consequat elit officia laborum consequat exercitation aliquip minim. Irure id veniam velit sunt labore incididunt reprehenderit ex. Labore dolore dolore pariatur id excepteur duis. Commodo consequat ut esse occaecat adipisicing proident in pariatur excepteur anim cupidatat minim excepteur laboris.",
+      "about": "<strike>Incididunt commodo sit </strike>irure ex excepteur duis non in. Proident excepteur anim laboris consequat elit officia laborum consequat exercitation aliquip minim. Irure id veniam velit sunt labore<b> incididunt</b> reprehenderit ex. Labore dolore dolore pariatur id excepteur duis. Commodo consequat ut esse occaecat adipisicing proident in pariatur excepteur anim cupidatat minim&nbsp;<p><br></p><p><br></p><h1>excepteur laboris.</h1>",
       "registered": "10.10.2015"
     },
     {
@@ -193,7 +193,7 @@
       "email": "demlev@lev.com",
       "address": "Odessa, UA",
       "company": "NEXTPAGE",
-      "about": "Lorem ipsum mi so",
+      "about": "<h1>Lorem ipsu<strike>m mi sosd sd dsadf sdf&nbsp;</strike></h1>",
       "id": 13,
       "age": "11",
       "balance": "$1,342.22",

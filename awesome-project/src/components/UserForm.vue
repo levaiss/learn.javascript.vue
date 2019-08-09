@@ -108,7 +108,7 @@
 
     <div class="form-group">
       <p>About</p>
-      <medium-editor :text="localUser.about" :options="option" custom-tag="div" :edit="saveAbout"></medium-editor>
+      <medium-editor :text="localUser.about" :options="option" custom-tag="div" @edit="saveAbout"></medium-editor>
     </div>
   </form>
 </template>
@@ -161,8 +161,8 @@ export default {
       this.localUser.pictureOrigin = $event.target.value;
       this.localUser.picture = $event.target.value;
     },
-    saveAbout: function (data) {
-      console.log(data);
+    saveAbout: function (operation) {
+      this.localUser.about = operation.api.origElements.innerHTML;
     }
   }
 };

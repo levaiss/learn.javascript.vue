@@ -42,9 +42,7 @@
       <div class="row">
         <div class="col-7">
           <h3 class="pb-2">Bio</h3>
-          <p>
-            {{ user.about }}
-          </p>
+          <div v-html="user.about"></div>
         </div>
         <div class="col-4 offset-1">
           <h3 class="pb-2">Account information</h3>
